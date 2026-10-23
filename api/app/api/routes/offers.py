@@ -154,7 +154,7 @@ async def list_offers(
     suspecte: bool | None = None,
     q: str | None = Query(default=None, description="Full text search on title, company, city and sector"),
     cursor: str | None = None,
-    limit: int = Query(default=20, le=100),
+    limit: int = Query(default=20, ge=1, le=100),
     db: AsyncSession = Depends(get_session),  # noqa: B008
 ) -> dict[str, Any]:
     stmt = select(Offer)
@@ -184,14 +184,15 @@ async def list_offers(
         )
     if cursor:
         decoded = _decode_cursor(cursor)
-        if decoded is not None:
-            stamp, identifier = decoded
-            stmt = stmt.where(
-                or_(
-                    Offer.created_at < stamp,
-                    and_(Offer.created_at == stamp, Offer.id < identifier),
-                )
+        if decoded is None:
+            raise HTTPException(status_code=422, detail="invalid cursor")
+        stamp, identifier = decoded
+        stmt = stmt.where(
+            or_(
+                Offer.created_at < stamp,
+                and_(Offer.created_at == stamp, Offer.id < identifier),
             )
+        )
     stmt = stmt.order_by(Offer.created_at.desc(), Offer.id.desc()).limit(limit)
     result = await db.execute(stmt)
     rows = result.scalars().all()

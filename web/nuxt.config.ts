@@ -28,10 +28,10 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      // Production default; overridden by NUXT_PUBLIC_API_BASE when set.
+      // Default to localhost in dev; production builds override via NUXT_PUBLIC_API_BASE.
       apiBase:
         process.env.NUXT_PUBLIC_API_BASE ||
-        'https://we-job-info.onrender.com'
+        (process.env.NODE_ENV === 'production' ? 'https://we-job-info.onrender.com' : 'http://localhost:8000')
     }
   },
 
