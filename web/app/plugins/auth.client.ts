@@ -11,9 +11,10 @@ export default defineNuxtPlugin({
   name: 'auth:restore',
   setup() {
     const auth = useAuthStore()
-    onMounted(() => {
-      if (!auth.isAuthenticated) {
-        auth.fetchMe()
+    onMounted(async () => {
+      if (!auth.initialized) {
+        await auth.fetchMe()
+        auth.initialized = true
       }
     })
   }

@@ -9,8 +9,15 @@
 
 const PUBLIC_PATHS = ['/login', '/logout']
 
-export default defineNuxtRouteMiddleware((to) => {
+export default defineNuxtRouteMiddleware(async (to) => {
   const auth = useAuthStore()
+
+  // Restore session from cookie if not yet initialized
+  if (!auth.initialized) {
+    await auth.fetchMe()
+    auth.initialized = true
+  }
+
   if (auth.isAuthenticated) {
     return
   }
