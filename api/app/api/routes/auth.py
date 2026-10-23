@@ -69,7 +69,7 @@ async def login(
         key=COOKIE_SESSION,
         value=session_token,
         httponly=True,
-        samesite="strict",
+        samesite="none" if settings.app_env != "development" else "strict",
         secure=secure,
         max_age=SESSION_MAX_AGE,
         path="/",
@@ -78,7 +78,7 @@ async def login(
         key=COOKIE_CSRF,
         value=csrf_token,
         httponly=False,
-        samesite="strict",
+        samesite="none" if settings.app_env != "development" else "strict",
         secure=secure,
         max_age=SESSION_MAX_AGE,
         path="/",
@@ -91,10 +91,10 @@ async def logout(request: Request, response: Response) -> dict:
     settings = get_settings()
     secure = settings.app_env != "development"
     response.delete_cookie(
-        COOKIE_SESSION, path="/", httponly=True, samesite="strict", secure=secure
+        COOKIE_SESSION, path="/", httponly=True, samesite="none" if settings.app_env != "development" else "strict", secure=secure
     )
     response.delete_cookie(
-        COOKIE_CSRF, path="/", httponly=False, samesite="strict", secure=secure
+        COOKIE_CSRF, path="/", httponly=False, samesite="none" if settings.app_env != "development" else "strict", secure=secure
     )
     return {"status": "ok"}
 
