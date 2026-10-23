@@ -17,6 +17,7 @@ from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.pool import StaticPool
 
 from app.api.main import create_app
+from app.api.deps import get_current_user
 from app.core.db import get_session
 from app.models import Base, Template
 
@@ -50,6 +51,13 @@ async def _override_session() -> AsyncGenerator[AsyncSession, None]:
 def _make_app() -> FastAPI:
     app = create_app()
     app.dependency_overrides[get_session] = _override_session
+
+    async def _override_user():
+        from app.models import User
+        import uuid
+        return User(id=uuid.uuid4(), email="test@test.com", password_hash="x")
+
+    app.dependency_overrides[get_current_user] = _override_user
     return app
 
 

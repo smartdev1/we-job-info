@@ -17,6 +17,7 @@ from sqlalchemy.pool import StaticPool
 
 from app.api.main import create_app
 from app.core.db import get_session
+from app.api.deps import get_current_user
 from app.models import Base
 
 TEST_URL = "sqlite+aiosqlite:///:memory:"
@@ -45,6 +46,13 @@ def make_app():
 
     application = create_app()
     application.dependency_overrides[get_session] = _override_session
+
+    async def _override_user():
+        from app.models import User
+        import uuid
+        return User(id=uuid.uuid4(), email="test@test.com", password_hash="x")
+
+    application.dependency_overrides[get_current_user] = _override_user
     return application
 
 

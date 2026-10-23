@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile, status
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from sqlalchemy import and_, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -129,6 +129,18 @@ class OfferPatchRequest(BaseModel):
     description: str | None = None
     internal_note: str | None = None
     score: float | None = None
+    application_url: str | None = None
+
+    @field_validator("application_url")
+    @classmethod
+    def _validate_application_url(cls, v: str | None) -> str | None:
+        if v is None or v.strip() == "":
+            return None
+        from app.services.url_safety import validate_url
+        try:
+            return validate_url(v)
+        except Exception:
+            raise ValueError("application_url must be a valid http/https URL")
 
 
 @router.get("")

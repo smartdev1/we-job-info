@@ -1,10 +1,11 @@
 """FastAPI application entrypoint."""
-
 from __future__ import annotations
 
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.deps import get_current_user
+from app.api.middleware import CSRFMiddleware
 from app.api.routes.auth import router as auth_router
 from app.api.routes.offers import router as offers_router
 from app.api.routes.templates import router as templates_router
@@ -28,12 +29,16 @@ def create_app() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+    app.add_middleware(CSRFMiddleware)
+
+    # Auth is required for all routers except /auth (login is public, me/logout require auth)
+    auth_dep = [Depends(get_current_user)]
 
     app.include_router(auth_router, prefix="/api/v1")
-    app.include_router(offers_router, prefix="/api/v1")
-    app.include_router(templates_router, prefix="/api/v1")
-    app.include_router(copywriting_router, prefix="/api/v1")
-    app.include_router(publishing_router, prefix="/api/v1")
+    app.include_router(offers_router, prefix="/api/v1", dependencies=auth_dep)
+    app.include_router(templates_router, prefix="/api/v1", dependencies=auth_dep)
+    app.include_router(copywriting_router, prefix="/api/v1", dependencies=auth_dep)
+    app.include_router(publishing_router, prefix="/api/v1", dependencies=auth_dep)
 
     @app.get("/healthz")
     def healthz() -> dict[str, str]:
