@@ -1,9 +1,9 @@
 <script setup lang="ts">
 /**
- * The application has no landing page: the first thing an operator needs is
- * the state of the collection, so the root redirects to the dashboard.
+ * The root page is the entry point of the tool: an operator must sign in
+ * before anything else, so the root redirects to the login page.
  */
-navigateTo('/dashboard', { replace: true })
+navigateTo('/login', { replace: true })
 </script>
 
 <template>

@@ -18,3 +18,14 @@ body {
   background-color: #e0f2fe;
   color: #075985;
 }
+
+/* Login form: every field must fill its column, even when the parent
+   UFormField tries to constrain it. */
+.auth-form .u-input,
+.auth-form .u-textarea,
+.auth-form .u-select {
+  width: 100% !important;
+}
+.auth-form .u-field-root {
+  width: 100% !important;
+}

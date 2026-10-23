@@ -37,3 +37,4 @@ logs
 # Editors / OS
 .vscode/
 *.swp
+.qwen/
