@@ -101,7 +101,7 @@ class Offer(Base, TimestampMixin):
     application_url: Mapped[str | None] = mapped_column(Text, nullable=True)
     deadline: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
-    origin_url: Mapped[str | None] = mapped_column(Text, nullable=True)
+    origin_url: Mapped[str | None] = mapped_column(Text, nullable=True, unique=True)
     source_id: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True), ForeignKey("sources.id", ondelete="SET NULL"), nullable=True
     )

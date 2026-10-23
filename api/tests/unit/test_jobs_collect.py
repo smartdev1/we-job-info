@@ -27,4 +27,4 @@ def test_collect_source_task_chains_extract(monkeypatch):
         with patch("app.jobs.tasks.extract_task.defer") as mock_defer:
             result = collect_source_task("src")
             assert result == ["raw text"]
-            mock_defer.assert_called_once_with(raw_text="raw text")
+            mock_defer.assert_called_once_with(raw_text="raw text", origin_url=None, source_id="src")

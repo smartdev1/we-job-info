@@ -216,3 +216,33 @@ async def persist_offer_detail(
 def columns_preview(detail: OfferDetail) -> dict[str, Any]:
     """Return the columns an offer detail would fill, for reporting."""
     return detail.as_columns()
+
+
+def persist_offer_detail_sync(
+    *,
+    source_id: str,
+    origin_url: str | None,
+    raw_html: str | None,
+    detail,
+    extraction_model: str | None = None,
+) -> None:
+    """Synchronous wrapper around :func:`persist_offer_detail` for procrastinate tasks."""
+    import asyncio
+
+    from app.core.db import SessionLocal
+    from app.ingestion.persist import ensure_source
+
+    async def _run():
+        async with SessionLocal() as db:
+            source_uuid = await ensure_source(db, source_id)
+            await persist_offer_detail(
+                db,
+                source_uuid=source_uuid,
+                detail=detail,
+                origin_url=origin_url,
+                raw_html=raw_html,
+                extraction_model=extraction_model,
+            )
+            await db.commit()
+
+    asyncio.run(_run())

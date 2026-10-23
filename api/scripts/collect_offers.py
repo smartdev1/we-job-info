@@ -168,7 +168,16 @@ async def collect_source_into_db(source_id: str) -> SourceStats:
                     # Idempotence keys: origin URL first, then the fingerprint.
                     # The fingerprint is computed here so that the "inserted vs
                     # updated" count reflects what really happened.
-                    fingerprint = compute_fingerprint(None, title, None)
+                    # Parse the detail page to get company/city for a reliable fingerprint.
+                    detail_company = None
+                    detail_city = None
+                    try:
+                        detail = connector.parse_detail(content)
+                        detail_company = getattr(detail, "company", None)
+                        detail_city = getattr(detail, "city", None)
+                    except Exception:
+                        pass
+                    fingerprint = compute_fingerprint(detail_company, title, detail_city)
                     already_there = await _find_existing(db, url=url, fingerprint=fingerprint)
 
                     extra: dict[str, Any] = {"raw_document_id": document.id}
@@ -181,6 +190,8 @@ async def collect_source_into_db(source_id: str) -> SourceStats:
                         source_id=source_uuid,
                         origin_url=url,
                         title=title,
+                        company=detail_company,
+                        city=detail_city,
                         fingerprint=fingerprint,
                         raw_text=content,
                         **extra,

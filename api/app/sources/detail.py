@@ -309,6 +309,12 @@ def clean(value: str | None) -> str | None:
     return cleaned or None
 
 
+def _end_of_day(dt, end_of_day):
+    if end_of_day:
+        return dt.replace(hour=23, minute=59, second=59)
+    return dt
+
+
 def parse_date(value: str | None, *, end_of_day: bool = False) -> datetime | None:
     """Parse a date written in one of the formats the five sites use.
 
@@ -322,10 +328,10 @@ def parse_date(value: str | None, *, end_of_day: bool = False) -> datetime | Non
 
     iso = _ISO_DATE.match(text)
     if iso:
-        day = datetime(
+        day = _end_of_day(datetime(
             int(iso.group(1)), int(iso.group(2)), int(iso.group(3)),
             tzinfo=timezone.utc,
-        )
+        ), end_of_day)
         if iso.group(4):
             time_parts = [int(p) for p in iso.group(4).split(":")]
             day = day.replace(hour=time_parts[0], minute=time_parts[1],
@@ -336,7 +342,7 @@ def parse_date(value: str | None, *, end_of_day: bool = False) -> datetime | Non
     if numeric:
         day, month, year = (int(g) for g in numeric.groups())
         try:
-            return datetime(year, month, day, tzinfo=timezone.utc)
+            return _end_of_day(datetime(year, month, day, tzinfo=timezone.utc), end_of_day)
         except ValueError:
             return None
 
@@ -346,7 +352,7 @@ def parse_date(value: str | None, *, end_of_day: bool = False) -> datetime | Non
         month = _month_number(month_name)
         if month:
             try:
-                return datetime(int(year), month, int(day), tzinfo=timezone.utc)
+                return _end_of_day(datetime(int(year), month, int(day), tzinfo=timezone.utc), end_of_day)
             except ValueError:
                 return None
 
@@ -356,7 +362,7 @@ def parse_date(value: str | None, *, end_of_day: bool = False) -> datetime | Non
         month = _month_number(month_name)
         if month:
             try:
-                return datetime(int(year), month, int(day), tzinfo=timezone.utc)
+                return _end_of_day(datetime(int(year), month, int(day), tzinfo=timezone.utc), end_of_day)
             except ValueError:
                 return None
     return None

@@ -20,8 +20,9 @@ def collect_source_task(source_id: str) -> list[Any]:
     for item in results:
         raw = item.get("raw_text") if isinstance(item, dict) else item
         origin_url = item.get("origin_url") if isinstance(item, dict) else None
+        source_id = item.get("source_id") if isinstance(item, dict) else None or source_id
         if isinstance(raw, str):
-            extract_task.defer(raw_text=raw)
+            extract_task.defer(raw_text=raw, origin_url=origin_url, source_id=source_id)
         # Persist collected offer (idempotent) when a DB is available.
         try:
             from app.storage.offers import persist_collected_offer_sync
@@ -43,7 +44,7 @@ def fetch_task(url: str) -> str:
 
 
 @app.task(retry=3, queue="process")
-def extract_task(raw_text: str) -> dict[str, Any]:
+def extract_task(raw_text: str, origin_url: str | None = None, source_id: str | None = None) -> dict[str, Any]:
     """Extract a structured offer from raw text via the LLM provider.
 
     Étape 1 : prétraitement HTML pour extraire les champs visibles (titre,
@@ -84,6 +85,29 @@ def extract_task(raw_text: str) -> dict[str, Any]:
     # --- ÉTAPE 3 : Extraction LLM ---
     provider = get_llm_provider()
     result = provider.extraire(enriched_text)
+    # Persist the extracted detail using the connector parser (reliable).
+    try:
+        from app.ingestion.persist import persist_offer_detail_sync
+        from app.sources.connector import get_connector
+        from app.sources.detail import OfferDetail
+
+        detail = OfferDetail()
+        if source_id:
+            try:
+                connector = get_connector(source_id)
+                detail = connector.parse_detail(raw_text)
+            except Exception:
+                pass
+        persist_offer_detail_sync(
+            source_id=source_id or "unknown",
+            origin_url=origin_url,
+            raw_html=raw_text,
+            detail=detail,
+            extraction_model="connector" if source_id else None,
+        )
+    except Exception as exc:
+        logger.warning("extract: persistence failed: %s", exc)
+
     return result.model_dump() if hasattr(result, "model_dump") else dict(result)
 
 
@@ -114,7 +138,7 @@ def expire_offers_task() -> int:
             text(
                 "UPDATE offers SET status = 'expiree' "
                 "WHERE deadline IS NOT NULL AND deadline < NOW() "
-                "AND status <> 'expiree'"
+                "AND status IN ('nouvelle', 'selectionnee')"
             )
         )
         count = result.rowcount or 0

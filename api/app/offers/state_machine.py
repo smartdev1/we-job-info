@@ -8,6 +8,7 @@ TRANSITIONS: dict[str, set[str]] = {
     "publiee": {"archivee"},
     "rejetee": {"nouvelle"},
     "archivee": set(),
+    "expiree": set(),
 }
 
 
