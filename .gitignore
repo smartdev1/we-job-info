@@ -1,0 +1,39 @@
+# Monorepo root: we-info-jobs (api/ + web/ + docs/)
+
+# Python (api/)
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.venv/
+.env
+.env.*
+!.env.example
+dev.db
+*.db
+.pytest-tmp.db
+uploads/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.python-version
+*.log
+
+# Nuxt / Node (web/)
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+node_modules
+logs
+.DS_Store
+.fleet
+.idea
+
+# Editors / OS
+.vscode/
+*.swp

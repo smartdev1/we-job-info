@@ -1,0 +1,35 @@
+{
+  "name": "web",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@iconify-json/lucide": "^1.2.142",
+    "@iconify-json/simple-icons": "^1.2.99",
+    "@nuxt/ui": "^4.11.3",
+    "@pinia/nuxt": "^0.11.0",
+    "@tanstack/vue-query": "^5.0.0",
+    "nuxt": "^4.6.1",
+    "openapi-fetch": "^0.13.0",
+    "pinia": "^4.1.0",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.17.0",
+    "@types/node": "^26.6.5",
+    "eslint": "^10.12.0",
+    "eslint-plugin-better-tailwindcss": "^4.9.0",
+    "openapi-typescript": "^7.0.0",
+    "typescript": "^6.0.3",
+    "vue-tsc": "^3.3.13"
+  },
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "typecheck": "nuxt typecheck",
+    "generate:api": "openapi-typescript http://localhost:8000/openapi.json -o app/api-client/schema.ts"
+  },
+  "packageManager": "pnpm@12.11.2"
+}

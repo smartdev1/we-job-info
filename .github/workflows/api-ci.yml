@@ -1,0 +1,68 @@
+name: api-ci
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "api/**"
+      - "render.yaml"
+      - ".github/workflows/api-ci.yml"
+  pull_request:
+    paths:
+      - "api/**"
+      - "render.yaml"
+      - ".github/workflows/api-ci.yml"
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Sync dependencies
+        run: uv sync --frozen
+
+      - name: Ruff (lint)
+        run: uv run ruff check .
+
+      - name: Ruff (format check)
+        run: uv run ruff format --check .
+
+      - name: Mypy
+        run: uv run mypy app
+
+      - name: Pytest
+        run: uv run pytest -q
+        env:
+          # CI uses a local SQLite database: no connection to Neon (or any
+          # external Postgres). DB-touching integration tests are skipped in
+          # CI unless a Postgres service container is explicitly provided.
+          DATABASE_URL: sqlite+aiosqlite:///tmp/ci.db
+          APP_ENV: test
+          SESSION_SECRET: ci-secret
+          ADMIN_EMAIL: admin@example.com
+          ADMIN_PASSWORD_HASH: ""
+
+  deploy:
+    needs: lint-and-test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render deploy
+        run: |
+          curl -sS -X POST "$RENDER_DEPLOY_HOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d '{"source":"github-actions"}'
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}

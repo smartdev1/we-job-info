@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Développeur Fullstack React / Node.js - Nexora Studio | We.Info Jobs</title>
+<!-- Google Fonts: Public Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with Forms and Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "error-container": "#ffdad6",
+            "on-surface-variant": "#494551",
+            "secondary-container": "#e1d4fd",
+            "on-primary-fixed": "#22005d",
+            "surface-container": "#f2ecf4",
+            "tertiary": "#765b00",
+            "on-tertiary-fixed": "#241a00",
+            "on-secondary-fixed": "#1f1635",
+            "on-primary": "#ffffff",
+            "on-secondary-container": "#645a7d",
+            "surface-container-highest": "#e6e0e9",
+            "error": "#ba1a1a",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#ded8e0",
+            "primary": "#0284c7",
+            "on-background": "#1d1b20",
+            "inverse-surface": "#322f35",
+            "secondary": "#0369a1",
+            "on-error-container": "#93000a",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed-variant": "#0284c7",
+            "primary-fixed-dim": "#bae6fd",
+            "secondary-fixed-dim": "#e0f2fe",
+            "surface-container-high": "#f0f9ff",
+            "inverse-on-surface": "#f5eff7",
+            "primary-container": "#e0f2fe",
+            "on-primary-container": "#0369a1",
+            "tertiary-container": "#c9a74d",
+            "surface-bright": "#fdf7ff",
+            "tertiary-fixed-dim": "#e7c365",
+            "primary-fixed": "#e0f2fe",
+            "on-tertiary-container": "#503d00",
+            "on-secondary-fixed-variant": "#4b4263",
+            "on-error": "#ffffff",
+            "surface": "#ffffff",
+            "surface-variant": "#f1f5f9",
+            "background": "#f8fafc",
+            "surface-container-low": "#f8fafc",
+            "surface-tint": "#0284c7",
+            "on-secondary": "#ffffff",
+            "tertiary-fixed": "#ffdf93",
+            "on-tertiary-fixed-variant": "#594400",
+            "outline-variant": "#e2e8f0",
+            "secondary-fixed": "#e0f2fe",
+            "on-surface": "#0f172a",
+            "outline": "#94a3b8",
+            "inverse-primary": "#bae6fd"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.375rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          fontFamily: {
+            headline: ["Public Sans", "sans-serif"],
+            display: ["Public Sans", "sans-serif"],
+            body: ["Public Sans", "sans-serif"],
+            label: ["Public Sans", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    body {
+      font-family: 'Public Sans', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col relative selection:bg-primary-container selection:text-primary">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-surface sticky top-0 z-40 border-b border-outline-variant shadow-sm w-full">
+<div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+<!-- Logo + Search bar on left -->
+<div class="flex items-center gap-6">
+<a class="flex items-center gap-2" href="#">
+<img alt="We.Info Jobs" class="h-9 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WvbGRcIB275_-n46Itm3LvnVPbasoqefRYA4hla9nbDfQtOGe00o--hDVDhCTViD1j9IyX1nozCkC-aScwbcT0VyKqJn5mBh-MXc0NEGq4KTY3x0y_2H3HsMg5bbIz2utXW9i71CNk5z0GolCHxHtjXqNRMeP0aYq2fntKRKxibK4KyZ1_2pEqKF5XdXs9hpAZqq9_28y4wCkQY_hGAJUWdUHPcuIglkUuoi7d6gHpnbhRX2yvr6Ae4q8"/>
+</a>
+<div class="hidden lg:flex items-center relative w-64">
+<span class="material-symbols-outlined absolute left-3 text-outline text-lg">search</span>
+<input class="w-full pl-9 pr-3 py-1.5 bg-surface-variant/60 border border-outline-variant rounded-full text-xs text-on-surface focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary" placeholder="Poste, techno, ville..." type="text"/>
+</div>
+</div>
+<!-- Navigation links (Strict labels & casing from JSON) -->
+<nav class="hidden md:flex items-center space-x-6 text-sm">
+<a class="border-b-2 border-primary text-primary font-semibold pb-1 flex items-center gap-1" href="#">Tech</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors pb-1" href="#">Marketing</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors pb-1" href="#">Design</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors pb-1" href="#">Management</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors pb-1" href="#">Mes Candidatures</a>
+</nav>
+<!-- Trailing actions -->
+<div class="flex items-center gap-3">
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-variant/50 rounded-full transition-colors relative" title="Notifications">
+<span class="material-symbols-outlined text-xl">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-primary rounded-full"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-variant/50 rounded-full transition-colors" title="Favoris">
+<span class="material-symbols-outlined text-xl">bookmark</span>
+</button>
+<a class="hidden sm:inline-flex items-center gap-1.5 bg-primary text-on-primary hover:bg-secondary text-xs sm:text-sm font-semibold px-4 py-2 rounded-lg transition-colors shadow-sm" href="#">
+<span class="material-symbols-outlined text-base">add_circle</span>
+<span>Publier une offre :-)</span>
+</a>
+<!-- Profile avatar -->
+<div class="h-9 w-9 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-xs border border-outline-variant">
+          WI
+        </div>
+</div>
+</div>
+</header>
+<!-- Context Background Canvas: Dashboard of offers (attenuated with soft scrim) -->
+<main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
+<!-- Header context -->
+<div class="flex flex-col md:flex-row md:items-center justify-between pb-6 gap-4 border-b border-outline-variant">
+<div>
+<h1 class="text-2xl font-bold tracking-tight text-on-surface">Offres d'emploi Tech en France \o/</h1>
+<p class="text-sm text-on-surface-variant mt-1">248 opportunités triées sur le volet pour développeurs et leads techniques.</p>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-xs font-semibold px-3 py-1.5 bg-primary-container text-on-primary-container rounded-full">Télétravail dispo ^_^</span>
+<span class="text-xs font-semibold px-3 py-1.5 bg-surface-variant text-on-surface-variant rounded-full">Dernière mise à jour : 10 min</span>
+</div>
+</div>
+<!-- Background job cards context grid (simulating active dashboard under overlay) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 opacity-40 pointer-events-none select-none blur-[1px]">
+<!-- Dummy Job Card 1 -->
+<div class="bg-surface p-6 rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold px-2.5 py-1 bg-surface-variant rounded text-on-surface">CDI</span>
+<span class="text-xs text-outline">Hier</span>
+</div>
+<h3 class="font-bold text-base mt-3 text-on-surface">Lead DevOps &amp; Kubernetes</h3>
+<p class="text-xs text-primary font-medium">CloudScale Infra</p>
+<div class="flex flex-wrap gap-2 mt-4">
+<span class="text-xs px-2 py-0.5 bg-slate-100 rounded text-slate-700">Docker</span>
+<span class="text-xs px-2 py-0.5 bg-slate-100 rounded text-slate-700">Terraform</span>
+<span class="text-xs px-2 py-0.5 bg-slate-100 rounded text-slate-700">AWS</span>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-outline-variant flex items-center justify-between text-xs text-on-surface-variant">
+<span>Lyon • Hybride</span>
+<span class="font-bold text-on-surface">65k - 75k €</span>
+</div>
+</div>
+<!-- Dummy Job Card 2 (Active context) -->
+<div class="bg-surface p-6 rounded-xl border-2 border-primary shadow-md flex flex-col justify-between relative ring-2 ring-primary/20">
+<div class="absolute -top-3 right-4 bg-primary text-on-primary text-[10px] font-bold px-2 py-0.5 rounded-full">Sélectionné :-)</div>
+<div>
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold px-2.5 py-1 bg-primary-container text-on-primary-container rounded">CDI</span>
+<span class="text-xs text-outline">Il y a 2h</span>
+</div>
+<h3 class="font-bold text-base mt-3 text-primary">Développeur Fullstack React / Node.js</h3>
+<p class="text-xs text-on-surface-variant font-medium">Nexora Studio</p>
+<div class="flex flex-wrap gap-2 mt-4">
+<span class="text-xs px-2 py-0.5 bg-sky-50 text-sky-800 rounded font-medium">React 19</span>
+<span class="text-xs px-2 py-0.5 bg-sky-50 text-sky-800 rounded font-medium">Node.js</span>
+<span class="text-xs px-2 py-0.5 bg-sky-50 text-sky-800 rounded font-medium">TypeScript</span>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-outline-variant flex items-center justify-between text-xs text-on-surface-variant">
+<span>Paris • Hybride</span>
+<span class="font-bold text-on-surface">55k - 68k €</span>
+</div>
+</div>
+<!-- Dummy Job Card 3 -->
+<div class="bg-surface p-6 rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold px-2.5 py-1 bg-surface-variant rounded text-on-surface">CDI</span>
+<span class="text-xs text-outline">Il y a 3j</span>
+</div>
+<h3 class="font-bold text-base mt-3 text-on-surface">Product Designer UI/UX</h3>
+<p class="text-xs text-primary font-medium">Kroma Creative</p>
+<div class="flex flex-wrap gap-2 mt-4">
+<span class="text-xs px-2 py-0.5 bg-slate-100 rounded text-slate-700">Figma</span>
+<span class="text-xs px-2 py-0.5 bg-slate-100 rounded text-slate-700">Design System</span>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-outline-variant flex items-center justify-between text-xs text-on-surface-variant">
+<span>Nantes • Full Remote</span>
+<span class="font-bold text-on-surface">45k - 55k €</span>
+</div>
+</div>
+</div>
+</main>
+<!-- ========================================================================= -->
+<!-- MODAL / COMPLETE JOB DETAIL VIEW OVERLAY                                   -->
+<!-- ========================================================================= -->
+<div aria-labelledby="modalJobTitle" aria-modal="true" class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 overflow-y-auto bg-slate-900/60 backdrop-blur-sm transition-all" id="jobModal" role="dialog">
+<!-- Modal Card Container -->
+<div class="relative w-full max-w-4xl bg-surface rounded-2xl shadow-2xl border border-outline-variant overflow-hidden my-auto max-h-[92vh] flex flex-col">
+<!-- Modal Top Sticky Toolbar -->
+<div class="sticky top-0 z-20 bg-surface/95 backdrop-blur-md px-6 py-4 border-b border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-2 text-xs text-on-surface-variant font-medium">
+<span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+<span>Offre active • Réponse garantie sous 48h (•‿•)</span>
+</div>
+<!-- Close button "[x] Fermer" -->
+<button class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-on-surface-variant hover:text-primary px-3 py-1.5 rounded-lg hover:bg-surface-variant transition-colors group" onclick="document.getElementById('jobModal').style.display='none'">
+<span class="material-symbols-outlined text-lg group-hover:rotate-90 transition-transform">close</span>
+<span>[x] Fermer</span>
+</button>
+</div>
+<!-- Scrollable Content of Job Detail -->
+<div class="overflow-y-auto p-6 sm:p-8 space-y-8 divide-y divide-outline-variant">
+<!-- SECTION 1: Header / Top Banner with Company & Job Metadata -->
+<div class="space-y-6 pt-1">
+<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-6">
+<!-- Left: Company Identity & Title -->
+<div class="flex items-start gap-4">
+<div class="w-16 h-16 rounded-xl bg-gradient-to-br from-primary to-sky-600 text-on-primary font-bold text-xl flex items-center justify-center shadow-md shrink-0 border border-sky-400">
+                NS
+              </div>
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="text-sm font-bold text-primary">Nexora Studio</span>
+<span class="text-outline text-xs">•</span>
+<span class="text-xs text-outline-variant bg-slate-100 text-slate-700 px-2 py-0.5 rounded font-medium">Studio Produit SaaS</span>
+</div>
+<h1 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface tracking-tight leading-snug" id="modalJobTitle">
+                  Développeur Fullstack React / Node.js
+                </h1>
+<div class="flex items-center gap-2 text-xs text-on-surface-variant pt-0.5">
+<span class="material-symbols-outlined text-sm text-outline">schedule</span>
+<span>Publiée il y a 2h</span>
+<span>•</span>
+<span class="text-sky-700 font-semibold">Équipe au top :-D</span>
+</div>
+</div>
+</div>
+<!-- Right: Prominent Salary Badge -->
+<div class="sm:text-right shrink-0">
+<div class="inline-block bg-primary-container border border-sky-300 px-4 py-2 rounded-xl text-on-primary-container shadow-sm">
+<span class="block text-[11px] font-semibold text-sky-800 uppercase tracking-wider">Rémunération annuelle</span>
+<span class="text-xl font-extrabold text-sky-950">55k - 68k € <span class="text-xs font-semibold text-sky-800">/ an</span></span>
+</div>
+</div>
+</div>
+<!-- Badges & Meta Highlights -->
+<div class="flex flex-wrap items-center gap-2.5 pt-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 text-slate-800 text-xs font-semibold rounded-lg">
+<span class="material-symbols-outlined text-sm text-slate-500">badge</span>
+              CDI
+            </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 text-slate-800 text-xs font-semibold rounded-lg">
+<span class="material-symbols-outlined text-sm text-slate-500">location_on</span>
+              Paris - Hybride (2j télétravail)
+            </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-sky-50 text-sky-800 text-xs font-semibold rounded-lg border border-sky-200">
+<span class="material-symbols-outlined text-sm text-sky-600">group</span>
+              45 collaborateurs
+            </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 text-slate-800 text-xs font-semibold rounded-lg">
+<span class="material-symbols-outlined text-sm text-slate-500">work_history</span>
+              3 à 5 ans d'expérience
+            </span>
+</div>
+<!-- Action Buttons Bar -->
+<div class="flex flex-wrap items-center gap-3 pt-2">
+<a class="inline-flex items-center justify-center gap-2 bg-primary hover:bg-secondary text-on-primary font-bold px-6 py-3 rounded-xl transition-all shadow-md hover:shadow-lg active:scale-[0.98]" href="#quickApplyForm">
+<span class="material-symbols-outlined text-lg">send</span>
+<span>Postuler maintenant :-)</span>
+</a>
+<button class="inline-flex items-center justify-center gap-2 bg-surface hover:bg-surface-variant text-on-surface border border-outline-variant font-semibold px-4 py-3 rounded-xl transition-all active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-lg text-rose-500">favorite</span>
+<span>Sauvegarder &lt;3</span>
+</button>
+<button class="inline-flex items-center justify-center gap-2 bg-surface hover:bg-surface-variant text-on-surface border border-outline-variant font-semibold px-4 py-3 rounded-xl transition-all active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-lg text-sky-600">share</span>
+<span>Partager :-P</span>
+</button>
+</div>
+</div>
+<!-- SECTION 2: Présentation de l'entreprise -->
+<div class="pt-8 space-y-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">apartment</span>
+<h2 class="text-lg font-bold text-on-surface">À propos de Nexora Studio</h2>
+</div>
+<div class="bg-surface-container-high/40 p-5 rounded-xl border border-sky-100 space-y-3">
+<p class="text-sm leading-relaxed text-on-surface-variant">
+              Fondé en 2021, <strong>Nexora Studio</strong> conçoit des plateformes SaaS B2B ultra-véloces dédiées à la gestion collaborative de workflows complexes. Notre mission est d'offrir une expérience utilisateur irréprochable et un niveau de finition digne des meilleurs standards internationaux.
+            </p>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs">
+<div class="bg-surface p-3 rounded-lg border border-outline-variant">
+<span class="block text-outline">Taille de l'équipe</span>
+<span class="font-bold text-on-surface text-sm mt-0.5 block">45 collaborateurs passionnés</span>
+</div>
+<div class="bg-surface p-3 rounded-lg border border-outline-variant">
+<span class="block text-outline">Culture d'entreprise</span>
+<span class="font-bold text-primary text-sm mt-0.5 block">Ambiance tech passionnée ^_^</span>
+</div>
+<div class="bg-surface p-3 rounded-lg border border-outline-variant">
+<span class="block text-outline">Méthodologie</span>
+<span class="font-bold text-on-surface text-sm mt-0.5 block">Cycles courts (Shape Up / Kanban)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 3: Missions & Responsabilités détaillées -->
+<div class="pt-8 space-y-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">rocket_launch</span>
+<h2 class="text-lg font-bold text-on-surface">Missions &amp; Responsabilités</h2>
+</div>
+<p class="text-sm text-on-surface-variant">
+            Intégré(e) au sein de la squad "Core Platform" (5 ingénieurs, 1 PM, 1 Product Designer), vous participerez activement à la conception et au déploiement des fonctionnalités phares de notre nouvelle génération d'applications.
+          </p>
+<ul class="space-y-3 text-sm text-on-surface-variant">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-lg shrink-0 mt-0.5">check_circle</span>
+<span><strong>Architecture &amp; Développement :</strong> Concevoir et coder des fonctionnalités front-end réactives et robustes en <em>React 19, Next.js</em> ainsi que des API microservices résilientes en <em>Node.js / TypeScript</em>.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-lg shrink-0 mt-0.5">check_circle</span>
+<span><strong>Performance &amp; Scalabilité :</strong> Optimiser le temps de réponse des requêtes complexes, la gestion du cache et la performance du rendu client / serveur (SSR, ISR).</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-lg shrink-0 mt-0.5">check_circle</span>
+<span><strong>Amélioration continue :</strong> Contribuer à la maintenance de notre Design System interne avec Tailwind CSS et promouvoir les meilleures pratiques d'accessibilité (WCAG).</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-lg shrink-0 mt-0.5">check_circle</span>
+<span><strong>Culture Engineering &amp; Code Review :</strong> Participer aux revues de code collégiales, mentorat de profils plus juniors et rédaction de tests automatisés (Vitest, Playwright).</span>
+</li>
+</ul>
+</div>
+<!-- SECTION 4: Profil recherché & Compétences -->
+<div class="pt-8 space-y-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">psychology</span>
+<h2 class="text-lg font-bold text-on-surface">Profil recherché &amp; Compétences</h2>
+</div>
+<div class="space-y-4">
+<div>
+<h3 class="text-xs font-bold uppercase tracking-wider text-outline mb-2">Stack Technique Requise</h3>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-sky-50 text-sky-900 border border-sky-200 rounded-lg text-xs font-semibold">React (React 19 &amp; Next.js)</span>
+<span class="px-3 py-1 bg-sky-50 text-sky-900 border border-sky-200 rounded-lg text-xs font-semibold">TypeScript (strict mode)</span>
+<span class="px-3 py-1 bg-sky-50 text-sky-900 border border-sky-200 rounded-lg text-xs font-semibold">Node.js (NestJS ou Fastify)</span>
+<span class="px-3 py-1 bg-sky-50 text-sky-900 border border-sky-200 rounded-lg text-xs font-semibold">PostgreSQL &amp; Prisma</span>
+<span class="px-3 py-1 bg-sky-50 text-sky-900 border border-sky-200 rounded-lg text-xs font-semibold">Tailwind CSS</span>
+<span class="px-3 py-1 bg-sky-50 text-sky-900 border border-sky-200 rounded-lg text-xs font-semibold">Docker &amp; CI/CD GitHub Actions</span>
+</div>
+</div>
+<div>
+<h3 class="text-xs font-bold uppercase tracking-wider text-outline mb-2">Expérience et qualités humaines</h3>
+<ul class="space-y-2 text-sm text-on-surface-variant">
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-outline text-base mt-0.5">done</span>
+<span>Minimum 3 à 5 ans d'expérience significative en environnement SaaS moderne.</span>
+</li>
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-outline text-base mt-0.5">done</span>
+<span>Sensibilité aiguë à l'expérience utilisateur et à la clarté du code produit.</span>
+</li>
+<li class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-outline text-base mt-0.5">done</span>
+<span>Communication transparente, pragmatisme et goût du travail en équipe bienveillante.</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- SECTION 5: Avantages / Perks -->
+<div class="pt-8 space-y-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">redeem</span>
+<h2 class="text-lg font-bold text-on-surface">Avantages &amp; Environnement de travail</h2>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+<div class="p-3.5 bg-surface-variant/40 rounded-xl border border-outline-variant flex items-start gap-3">
+<span class="material-symbols-outlined text-sky-600 text-xl mt-0.5">calendar_month</span>
+<div>
+<p class="text-xs font-bold text-on-surface">RTT &amp; Flexibilité</p>
+<p class="text-[11px] text-on-surface-variant mt-0.5">10 à 12 jours de RTT/an et horaires flexibles.</p>
+</div>
+</div>
+<div class="p-3.5 bg-surface-variant/40 rounded-xl border border-outline-variant flex items-start gap-3">
+<span class="material-symbols-outlined text-sky-600 text-xl mt-0.5">health_and_safety</span>
+<div>
+<p class="text-xs font-bold text-on-surface">Mutuelle Alan à 100%</p>
+<p class="text-[11px] text-on-surface-variant mt-0.5">Prise en charge intégrale pour vous et vos ayants droit.</p>
+</div>
+</div>
+<div class="p-3.5 bg-surface-variant/40 rounded-xl border border-outline-variant flex items-start gap-3">
+<span class="material-symbols-outlined text-sky-600 text-xl mt-0.5">laptop_mac</span>
+<div>
+<p class="text-xs font-bold text-on-surface">Budget Matériel &amp; Formation</p>
+<p class="text-[11px] text-on-surface-variant mt-0.5">MacBook Pro M3 Max + 1 500 € annuels de formation.</p>
+</div>
+</div>
+<div class="p-3.5 bg-surface-variant/40 rounded-xl border border-outline-variant flex items-start gap-3">
+<span class="material-symbols-outlined text-sky-600 text-xl mt-0.5">restaurant</span>
+<div>
+<p class="text-xs font-bold text-on-surface">Tickets Restaurant Swile</p>
+<p class="text-[11px] text-on-surface-variant mt-0.5">12 € par jour travaillé (pris en charge à 60%).</p>
+</div>
+</div>
+<div class="p-3.5 bg-surface-variant/40 rounded-xl border border-outline-variant flex items-start gap-3">
+<span class="material-symbols-outlined text-sky-600 text-xl mt-0.5">flight_takeoff</span>
+<div>
+<p class="text-xs font-bold text-on-surface">Séminaire annuel</p>
+<p class="text-[11px] text-on-surface-variant mt-0.5">3 jours au vert chaque été tous frais payés \o/</p>
+</div>
+</div>
+<div class="p-3.5 bg-surface-variant/40 rounded-xl border border-outline-variant flex items-start gap-3">
+<span class="material-symbols-outlined text-sky-600 text-xl mt-0.5">home_work</span>
+<div>
+<p class="text-xs font-bold text-on-surface">Hybride souple</p>
+<p class="text-[11px] text-on-surface-variant mt-0.5">2 à 3 jours de remote au choix chaque semaine.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 6: Processus de recrutement étape par étape -->
+<div class="pt-8 space-y-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">timeline</span>
+<h2 class="text-lg font-bold text-on-surface">Processus de recrutement fluide</h2>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+<div class="p-4 bg-surface rounded-xl border border-outline-variant relative">
+<span class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container font-bold text-xs flex items-center justify-center mb-2">1</span>
+<h4 class="text-xs font-bold text-on-surface">Call RH (30 min)</h4>
+<p class="text-[11px] text-on-surface-variant mt-1">Découverte mutuelle, motivations et questions mutuelles.</p>
+</div>
+<div class="p-4 bg-surface rounded-xl border border-outline-variant relative">
+<span class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container font-bold text-xs flex items-center justify-center mb-2">2</span>
+<h4 class="text-xs font-bold text-on-surface">Échange technique</h4>
+<p class="text-[11px] text-on-surface-variant mt-1">Live coding détendu de 45 min sans piège théorique ;-)</p>
+</div>
+<div class="p-4 bg-surface rounded-xl border border-outline-variant relative">
+<span class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container font-bold text-xs flex items-center justify-center mb-2">3</span>
+<h4 class="text-xs font-bold text-on-surface">Fit Équipe &amp; Fondateur</h4>
+<p class="text-[11px] text-on-surface-variant mt-1">Visite des bureaux parisiens et café informel.</p>
+</div>
+<div class="p-4 bg-sky-50 rounded-xl border border-sky-200 relative">
+<span class="w-6 h-6 rounded-full bg-primary text-on-primary font-bold text-xs flex items-center justify-center mb-2">4</span>
+<h4 class="text-xs font-bold text-sky-950">Offre sous 48h !</h4>
+<p class="text-[11px] text-sky-800 mt-1">Proposition transparente et détaillée sans attendre.</p>
+</div>
+</div>
+</div>
+<!-- SECTION 7: Formulaire express de candidature rapide -->
+<div class="pt-8 space-y-5" id="quickApplyForm">
+<div class="bg-gradient-to-br from-surface to-sky-50/60 p-6 sm:p-7 rounded-2xl border border-sky-200 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div>
+<h3 class="text-base sm:text-lg font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">edit_document</span>
+<span>Candidature express chez Nexora Studio</span>
+</h3>
+<p class="text-xs text-on-surface-variant mt-0.5">Remplissez ces quelques informations pour postuler directement.</p>
+</div>
+<span class="hidden sm:inline-block text-[11px] font-semibold text-primary bg-primary-container px-2.5 py-1 rounded-full">
+                Temps estimé : 2 minutes (•‿•)
+              </span>
+</div>
+<form class="space-y-4" onsubmit="event.preventDefault(); alert('Candidature transmise avec succès ! :-)');">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div>
+<label class="block text-xs font-semibold text-on-surface mb-1">Nom complet *</label>
+<input class="w-full text-xs px-3.5 py-2.5 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Alexandre Martin" required="" type="text"/>
+</div>
+<div>
+<label class="block text-xs font-semibold text-on-surface mb-1">Adresse email *</label>
+<input class="w-full text-xs px-3.5 py-2.5 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="alexandre.martin@example.com" required="" type="email"/>
+</div>
+</div>
+<div>
+<label class="block text-xs font-semibold text-on-surface mb-1">URL LinkedIn ou GitHub *</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-base">link</span>
+<input class="w-full text-xs pl-9 pr-3.5 py-2.5 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="https://linkedin.com/in/alexandre-martin ou https://github.com/..." required="" type="url"/>
+</div>
+</div>
+<div>
+<label class="block text-xs font-semibold text-on-surface mb-1">CV (PDF ou DOCX, max 5 Mo) *</label>
+<div class="border-2 border-dashed border-sky-300 hover:border-primary bg-surface p-4 rounded-xl text-center cursor-pointer transition-colors group">
+<span class="material-symbols-outlined text-2xl text-sky-500 group-hover:scale-110 transition-transform">cloud_upload</span>
+<p class="text-xs text-on-surface font-medium mt-1">Glissez votre CV ici ou <span class="text-primary underline">parcourez vos fichiers</span></p>
+<p class="text-[10px] text-outline mt-0.5">Formats acceptés : PDF, DOCX jusqu'à 5 Mo</p>
+</div>
+</div>
+<div>
+<label class="block text-xs font-semibold text-on-surface mb-1">Message de motivation (optionnel)</label>
+<textarea class="w-full text-xs px-3.5 py-2.5 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all resize-none" placeholder="Pourquoi ce challenge chez Nexora Studio vous motive particulièrement ? Parlez-nous de vos projets récents ^_^" rows="3"></textarea>
+</div>
+<div class="flex items-center justify-between pt-2">
+<p class="text-[11px] text-outline">Données confidentielles traitées selon les normes RGPD.</p>
+<button class="inline-flex items-center gap-2 bg-primary hover:bg-secondary text-on-primary font-bold px-6 py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg active:scale-[0.98] text-xs sm:text-sm" type="submit">
+<span>Envoyer ma candidature (•‿•)</span>
+<span class="material-symbols-outlined text-base">send</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<!-- Modal Footer Action Bar (Sticky at bottom for quick accessibility) -->
+<div class="sticky bottom-0 bg-surface/95 backdrop-blur-md px-6 py-3 border-t border-outline-variant flex items-center justify-between text-xs">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="font-bold text-on-surface">Nexora Studio</span> • <span>55k - 68k € / an</span> • <span class="text-sky-700 font-medium">Paris / Remote</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 font-medium text-on-surface-variant hover:text-on-surface rounded-lg" onclick="document.getElementById('jobModal').style.display='none'">
+            Fermer
+          </button>
+<a class="bg-primary hover:bg-secondary text-on-primary font-bold px-4 py-1.5 rounded-lg transition-colors" href="#quickApplyForm">
+            Postuler :-)
+          </a>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer (Shared Component) -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant mt-auto">
+<div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<span class="font-headline text-base font-bold text-primary">We.Info Jobs</span>
+<span class="text-xs text-outline">•</span>
+<p class="font-body text-sm text-on-surface-variant">
+          © 2025 We.Info Jobs :-) Tous droits réservés.
+        </p>
+</div>
+<nav class="flex flex-wrap items-center gap-6 font-body text-sm text-on-surface-variant">
+<a class="hover:text-primary transition-colors" href="#">À propos</a>
+<a class="hover:text-primary transition-colors" href="#">Offres Tech</a>
+<a class="hover:text-primary transition-colors" href="#">Entreprises</a>
+<a class="hover:text-primary transition-colors" href="#">Mentions légales</a>
+<a class="hover:text-primary transition-colors" href="#">Contact</a>
+</nav>
+</div>
+</footer>
+</body></html>

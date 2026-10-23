@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>{{ title | e }}</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  html, body {
+    width: 1080px;
+    height: 1350px;
+    background: #ffffff;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Helvetica, Arial, "sans-serif";
+    background-image: url("{{ background }}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #111827;
+    display: flex;
+    flex-direction: column;
+    padding: 48px;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 64px;
+  }
+  .logo {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    background: #ffffff;
+  }
+  .badge {
+    width: 120px;
+    height: 120px;
+    border-radius: 16px;
+    background: {{ badge_color }};
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 1;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+  }
+  .title {
+    font-size: {{ font_size }}px;
+    font-weight: 800;
+    line-height: 1.15;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 960px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  }
+  .meta {
+    margin-top: 28px;
+    font-size: 28px;
+    color: #374151;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  }
+  .company {
+    font-weight: 700;
+  }
+</style>
+</head>
+<body>
+  <div class="header">
+    {% if has_logo %}
+      <img class="logo" src="{{ logo_url | e }}" alt="Logo {{ company | e }}">
+    {% else %}
+      <div class="badge">{{ initials | e }}</div>
+    {% endif %}
+  </div>
+  <h1 class="title">{{ title | e }}</h1>
+  <p class="meta">
+    {% if company %}<span class="company">{{ company | e }}</span> {% endif %}
+    {% if location %}{{ location | e }}{% endif %}
+  </p>
+</body>
+</html>

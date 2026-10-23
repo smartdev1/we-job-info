@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>We.Info Jobs :-) | Plateforme d'offres d'emploi</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Public Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "background": "#fdf7ff",
+            "surface-bright": "#fdf7ff",
+            "surface-dim": "#ded8e0",
+            "secondary-container": "#e1d4fd",
+            "on-tertiary": "#ffffff",
+            "primary-fixed": "#e9ddff",
+            "primary-fixed-dim": "#cfbcff",
+            "error-container": "#ffdad6",
+            "surface-container-highest": "#e6e0e9",
+            "on-surface": "#1d1b20",
+            "tertiary-fixed-dim": "#e7c365",
+            "surface-container-high": "#ece6ee",
+            "tertiary-container": "#c9a74d",
+            "tertiary-fixed": "#ffdf93",
+            "on-primary-fixed": "#22005d",
+            "on-error": "#ffffff",
+            "surface-container": "#f2ecf4",
+            "primary": "#4f378a",
+            "on-tertiary-fixed": "#241a00",
+            "secondary-fixed-dim": "#cdc0e9",
+            "on-secondary-container": "#645a7d",
+            "inverse-surface": "#322f35",
+            "surface-container-lowest": "#ffffff",
+            "error": "#ba1a1a",
+            "surface-variant": "#e6e0e9",
+            "surface": "#fdf7ff",
+            "on-secondary-fixed": "#1f1635",
+            "surface-container-low": "#f8f2fa",
+            "surface-tint": "#6750a4",
+            "on-surface-variant": "#494551",
+            "secondary": "#63597c",
+            "on-secondary": "#ffffff",
+            "on-primary-fixed-variant": "#4f378a",
+            "outline-variant": "#cbc4d2",
+            "primary-container": "#6750a4",
+            "outline": "#7a7582",
+            "inverse-on-surface": "#f5eff7",
+            "inverse-primary": "#cfbcff",
+            "tertiary": "#765b00",
+            "secondary-fixed": "#e9ddff",
+            "on-primary-container": "#e0d2ff",
+            "on-background": "#1d1b20",
+            "on-tertiary-container": "#503d00",
+            "on-tertiary-fixed-variant": "#594400",
+            "on-secondary-fixed-variant": "#4b4263",
+            "on-error-container": "#93000a",
+            "on-primary": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "fontFamily": {
+            "headline": ["Public Sans", "sans-serif"],
+            "display": ["Public Sans", "sans-serif"],
+            "body": ["Public Sans", "sans-serif"],
+            "label": ["Public Sans", "sans-serif"],
+            "mono": ["JetBrains Mono", "monospace"]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f8f2fa;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbc4d2;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body antialiased min-h-screen flex flex-col selection:bg-sky-100 selection:text-sky-900">
+<!-- TOP APP BAR / NAVBAR -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none docked full-width top-0 sticky z-40">
+<div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+<!-- Brand & Search cluster -->
+<div class="flex items-center gap-6">
+<a class="flex items-center gap-2 group" href="#">
+<img alt="We.Info Jobs" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Wo3ZWAGRYmz1DuLQWcn-IJjDdBhE1SEbwuIhP3pAGeHuJpGhv0jCuK0Xy-TtSnCFZXGwvlrhhSp7J9ftegCdKciiInf7EfZFhwcX96wbNQNdTlbi1722zeM95SM_ExmyEf16otw-ZfzOJsBRqUuHSdjelMYU7dq0Wt3Zwre2co8KcsyxlsRFFxOxCqI7sAdBS28KSL3zm-l_umh_YnaLz-QUJ7Xq-pjdurjEUbR5DU5A7xL333nJs6ZNk"/>
+</a>
+<!-- Search Bar (on_left as specified) -->
+<div class="hidden lg:flex items-center relative w-72">
+<span class="material-symbols-outlined text-outline absolute left-3 pointer-events-none text-xl" data-icon="search">search</span>
+<input class="w-full pl-9 pr-3 py-1.5 text-sm bg-surface-container-low border border-outline-variant rounded-lg text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all" placeholder="Poste, techno, ville..." type="text"/>
+<span class="text-xs font-mono text-outline absolute right-2.5 bg-surface-container px-1 rounded">/</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center space-x-6 text-sm">
+<a class="border-b-2 border-primary text-primary dark:border-primary-fixed dark:text-primary-fixed font-semibold pb-1 flex items-center gap-1" href="#">
+<span>Tech</span>
+<span class="font-mono text-xs text-sky-600 bg-sky-50 px-1 rounded">:-)</span>
+</a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface hover:text-on-surface dark:hover:text-surface-bright transition-colors pb-1" href="#">
+          Marketing
+        </a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface hover:text-on-surface dark:hover:text-surface-bright transition-colors pb-1" href="#">
+          Design
+        </a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface hover:text-on-surface dark:hover:text-surface-bright transition-colors pb-1" href="#">
+          Management
+        </a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface hover:text-on-surface dark:hover:text-surface-bright transition-colors pb-1 flex items-center gap-1" href="#">
+<span>Mes Candidatures</span>
+<span class="w-2 h-2 rounded-full bg-sky-500"></span>
+</a>
+</nav>
+<!-- Trailing Action Cluster -->
+<div class="flex items-center space-x-3">
+<!-- Trailing Icon Actions -->
+<button aria-label="Notifications" class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors duration-150 relative" type="button">
+<span class="material-symbols-outlined text-xl" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-sky-600 rounded-full"></span>
+</button>
+<button aria-label="Bookmarks" class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors duration-150" type="button">
+<span class="material-symbols-outlined text-xl" data-icon="bookmark">bookmark</span>
+</button>
+<!-- Primary Action Button (Ciel Blue accented) -->
+<a class="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-lg bg-sky-600 hover:bg-sky-700 text-white shadow-sm active:scale-[0.98] transition-all" href="#">
+<span class="material-symbols-outlined text-base" data-icon="add_circle">add_circle</span>
+<span>Publier une offre :-)</span>
+</a>
+<!-- User profile -->
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-xs ring-2 ring-outline-variant cursor-pointer ml-1">
+          WI
+        </div>
+</div>
+</div>
+</header>
+<!-- MAIN CANVAS -->
+<main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+<!-- HERO SECTION WITH COMPREHENSIVE SEARCH -->
+<section class="bg-gradient-to-br from-surface-container-lowest via-surface-container-low to-sky-50/40 p-6 sm:p-8 rounded-xl border border-outline-variant shadow-sm relative overflow-hidden">
+<div class="absolute -right-16 -top-16 w-64 h-64 bg-sky-200/30 rounded-full blur-3xl pointer-events-none"></div>
+<div class="max-w-3xl space-y-3 relative z-10">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-100 text-sky-800 text-xs font-medium border border-sky-200">
+<span class="font-mono font-bold">1 420+</span>
+<span>opportunités qualifiées vérifiées</span>
+<span class="font-mono text-sky-600 font-bold">(•‿•)</span>
+</div>
+<h1 class="font-headline text-3xl sm:text-4xl font-extrabold tracking-tight text-on-surface">
+          Trouvez votre prochain défi tech &amp; pro <span class="text-sky-600 font-mono">:-)</span>
+</h1>
+<p class="text-on-surface-variant text-sm sm:text-base max-w-2xl">
+          Les meilleures opportunités en France &amp; Remote avec salaires 100% transparents. Pas de spam, uniquement du concret <span class="font-mono text-sky-700 font-semibold">&lt;3</span>
+</p>
+</div>
+<!-- Multi-Criteria Search Filter Bar -->
+<form class="mt-6 grid grid-cols-1 md:grid-cols-12 gap-3 p-2 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm relative z-10" onsubmit="event.preventDefault()">
+<div class="md:col-span-4 relative flex items-center">
+<span class="material-symbols-outlined text-outline absolute left-3.5 text-xl" data-icon="terminal">terminal</span>
+<input class="w-full pl-10 pr-3 py-2.5 text-sm bg-transparent border-0 focus:ring-0 text-on-surface placeholder:text-outline" placeholder="Intitulé de poste, stack (React, Go, AWS...)" type="text"/>
+</div>
+<div class="md:col-span-3 border-t md:border-t-0 md:border-l border-outline-variant relative flex items-center">
+<span class="material-symbols-outlined text-outline absolute left-3.5 text-xl" data-icon="location_on">location_on</span>
+<input class="w-full pl-10 pr-3 py-2.5 text-sm bg-transparent border-0 focus:ring-0 text-on-surface placeholder:text-outline" placeholder="Paris, Nantes, Remote..." type="text"/>
+</div>
+<div class="md:col-span-3 border-t md:border-t-0 md:border-l border-outline-variant flex items-center">
+<span class="material-symbols-outlined text-outline pl-3.5 text-xl" data-icon="tune">tune</span>
+<select class="w-full py-2.5 pl-2 pr-8 text-sm bg-transparent border-0 focus:ring-0 text-on-surface cursor-pointer">
+<option>Tous contrats (CDI, Freelance)</option>
+<option>CDI uniquement</option>
+<option>Freelance / TJM</option>
+<option>Temps partiel / Stage</option>
+</select>
+</div>
+<div class="md:col-span-2 flex items-center">
+<button class="w-full py-2.5 px-4 bg-sky-600 hover:bg-sky-700 text-white font-semibold text-sm rounded-lg flex items-center justify-center gap-1.5 transition-all shadow-sm active:scale-[0.98]" type="submit">
+<span class="material-symbols-outlined text-lg" data-icon="filter_list">filter_list</span>
+<span>Filtrer</span>
+</button>
+</div>
+</form>
+<!-- Quick Filter Chips / Emoticon Badges -->
+<div class="mt-4 flex flex-wrap items-center gap-2 pt-2">
+<span class="text-xs text-on-surface-variant font-medium">Filtres express :</span>
+<button class="px-3 py-1 rounded-full text-xs font-medium bg-sky-100 text-sky-800 hover:bg-sky-200 border border-sky-200 transition-colors flex items-center gap-1">
+<span>Télétravail 100%</span>
+<span class="font-mono font-bold">:-)</span>
+</button>
+<button class="px-3 py-1 rounded-full text-xs font-medium bg-surface-container text-on-surface hover:bg-surface-container-high border border-outline-variant transition-colors flex items-center gap-1">
+<span>CDI direct</span>
+<span class="font-mono font-bold">(•‿•)</span>
+</button>
+<button class="px-3 py-1 rounded-full text-xs font-medium bg-surface-container text-on-surface hover:bg-surface-container-high border border-outline-variant transition-colors flex items-center gap-1">
+<span>Junior friendly</span>
+<span class="font-mono font-bold">^_^</span>
+</button>
+<button class="px-3 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200 transition-colors flex items-center gap-1">
+<span>Haut salaire</span>
+<span class="font-mono font-bold text-amber-700">$$$</span>
+</button>
+<button class="px-3 py-1 rounded-full text-xs font-medium bg-purple-50 text-purple-800 hover:bg-purple-100 border border-purple-200 transition-colors flex items-center gap-1">
+<span>Management sain</span>
+<span class="font-mono font-bold">:-D</span>
+</button>
+</div>
+</section>
+<!-- CONTENT GRID: FILTERS SIDEBAR + JOB CARDS FEED -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- LEFT SIDEBAR: DETAILED REFINEMENT FILTERS -->
+<aside class="lg:col-span-4 space-y-6">
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm space-y-6">
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant">
+<h3 class="font-headline text-base font-bold text-on-surface flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sky-600 text-lg" data-icon="tune">tune</span>
+<span>Affiner ma recherche</span>
+</h3>
+<button class="text-xs text-sky-600 hover:underline font-mono">Effacer [x]</button>
+</div>
+<!-- Experience Level Filter -->
+<div class="space-y-2.5">
+<label class="text-xs font-semibold text-on-surface uppercase tracking-wider block">Niveau d'expérience</label>
+<div class="space-y-2 text-sm text-on-surface-variant">
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="flex items-center gap-2">
+<input checked="" class="rounded border-outline-variant text-sky-600 focus:ring-sky-500 h-4 w-4" type="checkbox"/>
+<span class="group-hover:text-on-surface">Junior (0 - 2 ans)</span>
+</span>
+<span class="text-xs font-mono text-outline">^_^ 142</span>
+</label>
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="flex items-center gap-2">
+<input checked="" class="rounded border-outline-variant text-sky-600 focus:ring-sky-500 h-4 w-4" type="checkbox"/>
+<span class="group-hover:text-on-surface">Confirmé (3 - 5 ans)</span>
+</span>
+<span class="text-xs font-mono text-outline">:-) 489</span>
+</label>
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="flex items-center gap-2">
+<input checked="" class="rounded border-outline-variant text-sky-600 focus:ring-sky-500 h-4 w-4" type="checkbox"/>
+<span class="group-hover:text-on-surface">Senior (5+ ans)</span>
+</span>
+<span class="text-xs font-mono text-outline">:-D 620</span>
+</label>
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="flex items-center gap-2">
+<input class="rounded border-outline-variant text-sky-600 focus:ring-sky-500 h-4 w-4" type="checkbox"/>
+<span class="group-hover:text-on-surface">Lead / Staff / Principal</span>
+</span>
+<span class="text-xs font-mono text-outline">O_o 114</span>
+</label>
+</div>
+</div>
+<!-- Minimum Salary Slider -->
+<div class="space-y-3 pt-3 border-t border-outline-variant">
+<div class="flex items-center justify-between">
+<label class="text-xs font-semibold text-on-surface uppercase tracking-wider">Salaire brut annuel minimum</label>
+<span class="text-xs font-mono font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded border border-sky-100">50k €+</span>
+</div>
+<input class="w-full accent-sky-600 cursor-pointer" max="120" min="30" type="range" value="50"/>
+<div class="flex justify-between text-xs font-mono text-outline">
+<span>30k €</span>
+<span>75k €</span>
+<span>120k €+</span>
+</div>
+</div>
+<!-- Work Mode -->
+<div class="space-y-2.5 pt-3 border-t border-outline-variant">
+<label class="text-xs font-semibold text-on-surface uppercase tracking-wider block">Mode de travail</label>
+<div class="grid grid-cols-2 gap-2 text-xs">
+<button class="p-2 border border-sky-500 bg-sky-50 text-sky-800 rounded font-medium text-center">
+                100% Télétravail :-)
+              </button>
+<button class="p-2 border border-outline-variant hover:bg-surface-container rounded text-on-surface-variant text-center">
+                Hybride 2-3j
+              </button>
+<button class="p-2 border border-outline-variant hover:bg-surface-container rounded text-on-surface-variant text-center">
+                Sur site régulier
+              </button>
+<button class="p-2 border border-outline-variant hover:bg-surface-container rounded text-on-surface-variant text-center">
+                Nomade EU :-P
+              </button>
+</div>
+</div>
+<!-- Technologies Stacks -->
+<div class="space-y-2.5 pt-3 border-t border-outline-variant">
+<label class="text-xs font-semibold text-on-surface uppercase tracking-wider block">Technologies populaires</label>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2.5 py-1 text-xs font-mono bg-sky-50 border border-sky-200 text-sky-800 rounded cursor-pointer hover:bg-sky-100">React.js</span>
+<span class="px-2.5 py-1 text-xs font-mono bg-surface-container border border-outline-variant text-on-surface-variant rounded cursor-pointer hover:bg-surface-container-high">TypeScript</span>
+<span class="px-2.5 py-1 text-xs font-mono bg-surface-container border border-outline-variant text-on-surface-variant rounded cursor-pointer hover:bg-surface-container-high">Python</span>
+<span class="px-2.5 py-1 text-xs font-mono bg-surface-container border border-outline-variant text-on-surface-variant rounded cursor-pointer hover:bg-surface-container-high">Node.js</span>
+<span class="px-2.5 py-1 text-xs font-mono bg-surface-container border border-outline-variant text-on-surface-variant rounded cursor-pointer hover:bg-surface-container-high">Go</span>
+<span class="px-2.5 py-1 text-xs font-mono bg-surface-container border border-outline-variant text-on-surface-variant rounded cursor-pointer hover:bg-surface-container-high">AWS</span>
+<span class="px-2.5 py-1 text-xs font-mono bg-surface-container border border-outline-variant text-on-surface-variant rounded cursor-pointer hover:bg-surface-container-high">Kubernetes</span>
+</div>
+</div>
+<!-- Callout widget -->
+<div class="p-4 bg-sky-50 border border-sky-200 rounded-lg text-xs space-y-1.5">
+<div class="font-bold text-sky-900 flex items-center justify-between">
+<span>Alerte e-mail personnalisée</span>
+<span class="font-mono text-sky-600 font-bold">&lt;3</span>
+</div>
+<p class="text-sky-800">Recevez les nouveaux postes chaque matin sans publicité.</p>
+<input class="w-full mt-2 px-2.5 py-1.5 text-xs bg-white border border-sky-300 rounded focus:outline-none" placeholder="votre@email.pro" type="email"/>
+<button class="w-full mt-1 py-1.5 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded text-xs">M'abonner :-)</button>
+</div>
+</div>
+</aside>
+<!-- RIGHT FEED: JOB OPPORTUNITY CARDS -->
+<section class="lg:col-span-8 space-y-4">
+<!-- Sorting and Count Bar -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2">
+<div class="flex items-center gap-2">
+<h2 class="font-headline font-bold text-lg text-on-surface">Offres récentes</h2>
+<span class="text-xs font-mono bg-sky-100 text-sky-800 px-2 py-0.5 rounded font-semibold">18 nouvelles aujourd'hui :-)</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-on-surface-variant">
+<span>Trier par :</span>
+<select class="text-xs bg-surface-container-lowest border border-outline-variant rounded-lg py-1 px-2.5 text-on-surface focus:ring-sky-500">
+<option>Plus récentes</option>
+<option>Salaire le plus élevé ($$$)</option>
+<option>Pertinence</option>
+</select>
+</div>
+</div>
+<!-- JOB CARD 1: Fullstack React / Node -->
+<article class="bg-surface-container-lowest hover:border-sky-300 border border-outline-variant rounded-xl p-5 sm:p-6 shadow-sm hover:shadow transition-all relative group">
+<!-- TOP-RIGHT DETAILS ACTION BUTTON (Exact requirement) -->
+<div class="absolute top-5 right-5 sm:top-6 sm:right-6">
+<a class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-lg text-sky-700 bg-sky-50 border border-sky-300 hover:bg-sky-600 hover:text-white transition-all shadow-sm" href="#">
+<span>Détails -&gt;</span>
+</a>
+</div>
+<div class="flex items-start gap-4 pr-24">
+<!-- Company Logo Badge -->
+<div class="w-12 h-12 rounded-lg bg-sky-100 text-sky-800 border border-sky-200 flex items-center justify-center font-bold font-headline text-base shrink-0">
+              NX
+            </div>
+<div class="space-y-1.5">
+<div class="flex flex-wrap items-center gap-2">
+<span class="text-xs font-semibold text-sky-800 bg-sky-50 px-2 py-0.5 rounded">Nexora Studio</span>
+<span class="text-xs text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-sm" data-icon="location_on">location_on</span>
+<span>Paris - Hybride (2j télétravail)</span>
+</span>
+</div>
+<h3 class="font-headline text-lg sm:text-xl font-bold text-on-surface group-hover:text-sky-700 transition-colors">
+                Développeur Fullstack React / Node.js
+              </h3>
+</div>
+</div>
+<!-- Specs & Highlights -->
+<div class="mt-4 pt-4 border-t border-outline-variant flex flex-wrap items-center justify-between gap-3 text-sm">
+<div class="flex flex-wrap items-center gap-2">
+<span class="px-2.5 py-1 rounded text-xs font-bold bg-purple-100 text-purple-900">CDI</span>
+<span class="px-2.5 py-1 rounded text-xs font-bold font-mono bg-emerald-50 text-emerald-800 border border-emerald-200">55k - 68k € / an</span>
+<span class="px-2.5 py-1 rounded text-xs font-mono bg-surface-container text-on-surface-variant">TypeScript</span>
+<span class="px-2.5 py-1 rounded text-xs font-mono bg-surface-container text-on-surface-variant">PostgreSQL</span>
+<span class="px-2.5 py-1 rounded text-xs font-mono bg-surface-container text-on-surface-variant">Tailwind</span>
+</div>
+<div class="flex items-center gap-3 text-xs text-on-surface-variant">
+<span class="font-mono text-sky-700 font-medium">Équipe au top :-D</span>
+<span class="text-outline">•</span>
+<span class="text-outline">Il y a 2h</span>
+</div>
+</div>
+</article>
+<!-- JOB CARD 2: Lead DevOps Kubernetes -->
+<article class="bg-surface-container-lowest hover:border-sky-300 border border-outline-variant rounded-xl p-5 sm:p-6 shadow-sm hover:shadow transition-all relative group">
+<!-- TOP-RIGHT DETAILS ACTION BUTTON -->
+<div class="absolute top-5 right-5 sm:top-6 sm:right-6">
+<a class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-lg text-sky-700 bg-sky-50 border border-sky-300 hover:bg-sky-600 hover:text-white transition-all shadow-sm" href="#">
+<span>Détails -&gt;</span>
+</a>
+</div>
+<div class="flex items-start gap-4 pr-24">
+<!-- Company Logo Badge -->
+<div class="w-12 h-12 rounded-lg bg-indigo-100 text-indigo-900 border border-indigo-200 flex items-center justify-center font-bold font-headline text-base shrink-0">
+              CL
+            </div>
+<div class="space-y-1.5">
+<div class="flex flex-wrap items-center gap-2">
+<span class="text-xs font-semibold text-indigo-900 bg-indigo-50 px-2 py-0.5 rounded">CloudScale IO</span>
+<span class="text-xs text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-sm" data-icon="location_on">location_on</span>
+<span>100% Remote (France / UE)</span>
+</span>
+<span class="text-xs font-mono text-sky-600 font-bold">:-) Full remote</span>
+</div>
+<h3 class="font-headline text-lg sm:text-xl font-bold text-on-surface group-hover:text-sky-700 transition-colors">
+                Lead DevOps &amp; Infrastructure Kubernetes
+              </h3>
+</div>
+</div>
+<!-- Specs & Highlights -->
+<div class="mt-4 pt-4 border-t border-outline-variant flex flex-wrap items-center justify-between gap-3 text-sm">
+<div class="flex flex-wrap items-center gap-2">
+<span class="px-2.5 py-1 rounded text-xs font-bold bg-purple-100 text-purple-900">CDI</span>
+<span class="px-2.5 py-1 rounded text-xs font-bold font-mono bg-emerald-50 text-emerald-800 border border-emerald-200">75k - 90k € / an</span>
+<span class="px-2.5 py-1 rounded text-xs font-mono bg-surface-container text-on-surface-variant">Terraform</span>
+<span class="px-2.5 py-1 rounded text-xs font-mono bg-surface-container text-on-surface-variant">AWS</span>
+<span class="px-2.5 py-1 rounded text-xs font-mono bg-surface-container text-on-surface-variant">Docker</span>
+<span class="px-2.5 py-1 rounded text-xs font-mono bg-surface-container text-on-surface-variant">ArgoCD</span>
+</div>
+<div class="flex items-center gap-3 text-xs text-on-surface-variant">
+<span class="font-mono text-purple-700 font-medium">Stack ultra moderne ^_^</span>
+<span class="text-outline">•</span>
+<span class="text-outline">Il y a 5h</span>
+</div>
+</div>
+</article>
+<!-- JOB CARD 3: Product Designer Senior -->
+<article class="bg-surface-container-lowest hover:border-sky-300 border border-outline-variant rounded-xl p-5 sm:p-6 shadow-sm hover:shadow transition-all relative group">
+<!-- TOP-RIGHT DETAILS ACTION BUTTON -->
+<div class="absolute top-5 right-5 sm:top-6 sm:right-6">
+<a class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-lg text-sky-700 bg-sky-50 border border-sky-300 hover:bg-sky-600 hover:text-white transition-all shadow-sm" href="#">
+<span>Détails -&gt;</span>
+</a>
+</div>
+<div class="flex items-start gap-4 pr-24">
+<!-- Company Logo Badge -->
+<div class="w-12 h-12 rounded-lg bg-pink-100 text-pink-900 border border-pink-200 flex items-center justify-center font-bold font-headline text-base shrink-0">
+              FL
+            </div>
+<div class="space-y-1.5">
+<div class="flex flex-wrap items-center gap-2">
+<span class="text-xs font-semibold text-pink-900 bg-pink-50 px-2 py-0.5 rounded">FlowDesign Paris</span>
+<span class="text-xs text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-sm" data-icon="location_on">location_on</span>
+<span>Paris 9e - Hybride (1j/semaine site)</span>
+</span>
+</div>
+<h3 class="font-headline text-lg sm:text-xl font-bold text-on-surface group-hover:text-sky-700 transition-colors">
+                Product Designer Senior (Design System &amp; UX)
+              </h3>
+</div>
+</div>
+<!-- Specs & Highlights -->
+<div class="mt-4 pt-4 border-t border-outline-variant flex flex-wrap items-center justify-between gap-3 text-sm">
+<div class="flex flex-wrap items-center gap-2">
+<span class="px-2.5 py-1 rounded text-xs font-bold bg-purple-100 text-purple-900">CDI</span>
+<span class="px-2.5 py-1 rounded text-xs font-bold font-mono bg-emerald-50 text-emerald-800 border border-emerald-200">60k - 72k € / an</span>
+<span class="px-2.5 py-1 rounded text-xs font-mono bg-surface-container text-on-surface-variant">Figma</span>
+<span class="px-2.5 py-1 rounded text-xs font-mono bg-surface-container text-on-surface-variant">Design System</span>
+<span class="px-2.5 py-1 rounded text-xs font-mono bg-surface-container text-on-surface-variant">User Research</span>
+</div>
+<div class="flex items-center gap-3 text-xs text-on-surface-variant">
+<span class="font-mono text-rose-700 font-medium">Culture produit forte &lt;3</span>
+<span class="text-outline">•</span>
+<span class="text-outline">Hier</span>
+</div>
+</div>
+</article>
+<!-- JOB CARD 4: Data Engineer GCP -->
+<article class="bg-surface-container-lowest hover:border-sky-300 border border-outline-variant rounded-xl p-5 sm:p-6 shadow-sm hover:shadow transition-all relative group">
+<!-- TOP-RIGHT DETAILS ACTION BUTTON -->
+<div class="absolute top-5 right-5 sm:top-6 sm:right-6">
+<a class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-lg text-sky-700 bg-sky-50 border border-sky-300 hover:bg-sky-600 hover:text-white transition-all shadow-sm" href="#">
+<span>Détails -&gt;</span>
+</a>
+</div>
+<div class="flex items-start gap-4 pr-24">
+<!-- Company Logo Badge -->
+<div class="w-12 h-12 rounded-lg bg-teal-100 text-teal-900 border border-teal-200 flex items-center justify-center font-bold font-headline text-base shrink-0">
+              QZ
+            </div>
+<div class="space-y-1.5">
+<div class="flex flex-wrap items-center gap-2">
+<span class="text-xs font-semibold text-teal-900 bg-teal-50 px-2 py-0.5 rounded">Quantz Analytics</span>
+<span class="text-xs text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-sm" data-icon="location_on">location_on</span>
+<span>Lyon - Hybride flexible</span>
+</span>
+</div>
+<h3 class="font-headline text-lg sm:text-xl font-bold text-on-surface group-hover:text-sky-700 transition-colors">
+                Senior Data Engineer GCP &amp; BigQuery
+              </h3>
+</div>
+</div>
+<!-- Specs & Highlights -->
+<div class="mt-4 pt-4 border-t border-outline-variant flex flex-wrap items-center justify-between gap-3 text-sm">
+<div class="flex flex-wrap items-center gap-2">
+<span class="px-2.5 py-1 rounded text-xs font-bold bg-amber-100 text-amber-900">Freelance</span>
+<span class="px-2.5 py-1 rounded text-xs font-bold font-mono bg-blue-50 text-blue-800 border border-blue-200">600 - 750 € / jour</span>
+<span class="px-2.5 py-1 rounded text-xs font-mono bg-surface-container text-on-surface-variant">Python</span>
+<span class="px-2.5 py-1 rounded text-xs font-mono bg-surface-container text-on-surface-variant">dbt</span>
+<span class="px-2.5 py-1 rounded text-xs font-mono bg-surface-container text-on-surface-variant">Airflow</span>
+</div>
+<div class="flex items-center gap-3 text-xs text-on-surface-variant">
+<span class="font-mono text-teal-700 font-medium">Mission longue durée (•‿•)</span>
+<span class="text-outline">•</span>
+<span class="text-outline">Hier</span>
+</div>
+</div>
+</article>
+<!-- JOB CARD 5: Chef de Projet Agile -->
+<article class="bg-surface-container-lowest hover:border-sky-300 border border-outline-variant rounded-xl p-5 sm:p-6 shadow-sm hover:shadow transition-all relative group">
+<!-- TOP-RIGHT DETAILS ACTION BUTTON -->
+<div class="absolute top-5 right-5 sm:top-6 sm:right-6">
+<a class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-lg text-sky-700 bg-sky-50 border border-sky-300 hover:bg-sky-600 hover:text-white transition-all shadow-sm" href="#">
+<span>Détails -&gt;</span>
+</a>
+</div>
+<div class="flex items-start gap-4 pr-24">
+<!-- Company Logo Badge -->
+<div class="w-12 h-12 rounded-lg bg-orange-100 text-orange-900 border border-orange-200 flex items-center justify-center font-bold font-headline text-base shrink-0">
+              MV
+            </div>
+<div class="space-y-1.5">
+<div class="flex flex-wrap items-center gap-2">
+<span class="text-xs font-semibold text-orange-900 bg-orange-50 px-2 py-0.5 rounded">MedVelocity Santé</span>
+<span class="text-xs text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-sm" data-icon="location_on">location_on</span>
+<span>Nantes - Hybride (3j télétravail)</span>
+</span>
+</div>
+<h3 class="font-headline text-lg sm:text-xl font-bold text-on-surface group-hover:text-sky-700 transition-colors">
+                Chef de Projet Technique &amp; Scrum Master Agile
+              </h3>
+</div>
+</div>
+<!-- Specs & Highlights -->
+<div class="mt-4 pt-4 border-t border-outline-variant flex flex-wrap items-center justify-between gap-3 text-sm">
+<div class="flex flex-wrap items-center gap-2">
+<span class="px-2.5 py-1 rounded text-xs font-bold bg-purple-100 text-purple-900">CDI</span>
+<span class="px-2.5 py-1 rounded text-xs font-bold font-mono bg-emerald-50 text-emerald-800 border border-emerald-200">52k - 62k € / an</span>
+<span class="px-2.5 py-1 rounded text-xs font-mono bg-surface-container text-on-surface-variant">Jira</span>
+<span class="px-2.5 py-1 rounded text-xs font-mono bg-surface-container text-on-surface-variant">Scrum</span>
+<span class="px-2.5 py-1 rounded text-xs font-mono bg-surface-container text-on-surface-variant">API REST</span>
+</div>
+<div class="flex items-center gap-3 text-xs text-on-surface-variant">
+<span class="font-mono text-sky-700 font-medium">Impact santé positif :-)</span>
+<span class="text-outline">•</span>
+<span class="text-outline">Il y a 2 jours</span>
+</div>
+</div>
+</article>
+<!-- PAGINATION / LOAD MORE -->
+<div class="pt-6 pb-2 text-center">
+<button class="px-6 py-3 bg-surface-container-lowest hover:bg-sky-50 border border-sky-300 text-sky-800 font-semibold text-sm rounded-xl shadow-sm transition-all hover:shadow active:scale-[0.98] inline-flex items-center gap-2" type="button">
+<span>Charger plus d'offres :-)</span>
+<span class="material-symbols-outlined text-base" data-icon="expand_more">expand_more</span>
+</button>
+<p class="text-xs text-outline mt-2 font-mono">Affichage de 5 sur 1 420 offres disponibles ^_^</p>
+</div>
+</section>
+</div>
+</main>
+<!-- FOOTER (Exact structure & text from Shared Components JSON) -->
+<footer class="bg-surface-container-lowest dark:bg-inverse-surface border-t border-outline-variant dark:border-outline docked full-width bottom mt-12">
+<div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+<!-- Brand & Copyright -->
+<div class="flex flex-col sm:flex-row items-center gap-3">
+<a class="font-headline text-base font-bold text-primary dark:text-primary-fixed" href="#">
+          We.Info Jobs
+        </a>
+<span class="hidden sm:inline text-outline">•</span>
+<span class="font-body text-sm text-on-surface-variant dark:text-inverse-on-surface">
+          © 2025 We.Info Jobs :-) Tous droits réservés.
+        </span>
+</div>
+<!-- Footer Navigation Links -->
+<nav class="flex flex-wrap items-center justify-center gap-6 font-body text-sm">
+<a class="text-on-surface-variant dark:text-inverse-on-surface hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">
+          À propos
+        </a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">
+          Offres Tech
+        </a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">
+          Entreprises
+        </a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">
+          Mentions légales
+        </a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">
+          Contact
+        </a>
+</nav>
+</div>
+</footer>
+</body></html>

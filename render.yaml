@@ -1,0 +1,47 @@
+services:
+  - type: web
+    name: we-info-jobs-api
+    runtime: python
+    region: frankfurt
+    plan: free
+    buildCommand: uv sync --frozen && uv run alembic upgrade head
+    startCommand: uv run uvicorn app.api.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /healthz
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: info
+      - key: PYTHON_VERSION
+        value: "3.12"
+      - key: DATABASE_URL
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: LLM_PROVIDER
+        value: anthropic
+      - key: LLM_MODEL_EXTRACTION
+        value: claude-haiku-4-5
+      - key: LLM_MODEL_COPYWRITING
+        value: claude-sonnet-4-5
+      - key: LLM_MONTHLY_CAP_USD
+        value: "20"
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD_HASH
+        sync: false
+      - key: APP_BASE_URL
+        sync: false
+      - key: FRONT_BASE_URL
+        sync: false
+      - key: MAX_UPLOAD_MB
+        value: "5"
+      - key: SSRF_MAX_REDIRECTS
+        value: "3"
+
+
+# NOTE: Background worker (app.jobs.worker) is NOT defined here.
+# It will be added in V2+ (T-020+) once the collection job scheduler is implemented.
+# Until then, the API runs without a worker service.

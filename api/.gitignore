@@ -1,0 +1,36 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+.venv/
+
+# Local environment and secrets (never commit credentials)
+.env
+.env.*
+!.env.example
+
+# Local databases (SQLite dev instances)
+dev.db
+*.db
+.pytest-tmp.db
+
+# Uploaded files
+uploads/
+
+# Tool caches
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.qwen/
+
+# uv version pin (local only; uv.lock is committed)
+.python-version
+
+# Logs
+*.log
