@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const config = useRuntimeConfig()
-const apiBase = (config.public.apiBase as string).replace(/\/$/, '')
+const api = useApi()
 
 const text = ref('')
 const loading = ref(false)
@@ -21,24 +20,9 @@ async function submitUrl() {
   jobIdUrl.value = null
   existingOfferId.value = null
   try {
-    const res = await fetch(`${apiBase}/api/v1/offers/from-url`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({ url: url.value })
-    })
-    if (!res.ok) {
-      let detail = `HTTP ${res.status}`
-      try {
-        const body = await res.json()
-        if (body?.detail) detail = body.detail
-      } catch {
-        // ignore parse errors, keep HTTP status detail
-      }
-      throw new Error(detail)
-    }
-    const data = await res.json()
-    if (data.existing) existingOfferId.value = data.offer_id
+    const { data, error: err } = await api.post('/api/v1/offers/from-url', { url: url.value })
+    if (err) throw new Error(err.message)
+    if (data?.existing) existingOfferId.value = data.offer_id
     else jobIdUrl.value = data.job_id
   } catch (e) {
     errorUrl.value = e instanceof Error ? e.message : 'Erreur inconnue'
@@ -52,14 +36,8 @@ async function submit() {
   error.value = null
   jobId.value = null
   try {
-    const res = await fetch(`${apiBase}/api/v1/offers/from-text`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({ text: text.value })
-    })
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
-    const data = await res.json()
+    const { data, error: err } = await api.post('/api/v1/offers/from-text', { text: text.value })
+    if (err) throw new Error(err.message)
     jobId.value = data.job_id
   } catch (e) {
     error.value = e instanceof Error ? e.message : 'Erreur inconnue'

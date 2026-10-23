@@ -6,8 +6,7 @@ import { useInfiniteQuery } from '@tanstack/vue-query'
 const props = withDefaults(defineProps<{ bulk?: boolean }>(), { bulk: false })
 
 const router = useRouter()
-const config = useRuntimeConfig()
-const apiBase = (config.public.apiBase as string).replace(/\/$/, '')
+const api = useApi()
 
 interface OfferItem {
   id: string
@@ -74,9 +73,9 @@ const {
     if (city.value) params.set('city', city.value)
     if (debouncedSearch.value) params.set('q', debouncedSearch.value)
     if (pageParam) params.set('cursor', pageParam)
-    const res = await fetch(`${apiBase}/api/v1/offers?${params.toString()}`, { credentials: 'include' })
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
-    return res.json() as Promise<Page>
+    const { data, error } = await api.get<Page>(`/api/v1/offers?${params.toString()}`)
+    if (error) throw new Error(error.message)
+    return data as Page
   },
   getNextPageParam: (last: Page) => last.next_cursor ?? undefined,
   refetchInterval: 10000
@@ -140,13 +139,8 @@ async function transition(ids: string[], newStatus: string) {
   actionError.value = null
   const failures: string[] = []
   for (const id of ids) {
-    const res = await fetch(`${apiBase}/api/v1/offers/${id}/status`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({ status: newStatus })
-    })
-    if (!res.ok) {
+    const { error } = await api.post(`/api/v1/offers/${id}/status`, { status: newStatus })
+    if (error) {
       failures.push(id)
     }
   }

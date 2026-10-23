@@ -13,12 +13,9 @@ export const useAuthStore = defineStore('auth', () => {
   async function login(email: string, password: string): Promise<boolean> {
     loading.value = true
     try {
-      const client = useApiClient()
-      const { data, error, response } = await client.POST('/api/v1/auth/login', {
-        body: { email, password }
-      })
-      if (error || !response?.ok) return false
-      // Set user from login response + fetch full profile
+      const api = useApi()
+      const { data, error } = await api.post('/api/v1/auth/login', { email, password })
+      if (error) return false
       await fetchMe()
       initialized.value = true
       return true
@@ -28,20 +25,18 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function logout(): Promise<void> {
-    const client = useApiClient()
+    const api = useApi()
     const csrf = useCookie('csrf_token').value
-    await client.POST('/api/v1/auth/logout', {
-      headers: { 'x-csrf-token': csrf ?? '' }
-    })
+    await api.post('/api/v1/auth/logout', {})
     user.value = null
     initialized.value = false
     await navigateTo('/login')
   }
 
   async function fetchMe(): Promise<void> {
-    const client = useApiClient()
-    const { data, error, response } = await client.GET('/api/v1/auth/me')
-    if (error || !response?.ok || !data) {
+    const api = useApi()
+    const { data, error } = await api.get('/api/v1/auth/me')
+    if (error || !data) {
       user.value = null
       return
     }

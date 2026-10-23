@@ -2,8 +2,7 @@
 import { computed } from 'vue'
 import { useQuery } from '@tanstack/vue-query'
 
-const config = useRuntimeConfig()
-const apiBase = (config.public.apiBase as string).replace(/\/$/, '')
+const api = useApi()
 
 interface Stats {
   total: number
@@ -16,9 +15,9 @@ interface Stats {
 const { data: stats, isLoading, error } = useQuery({
   queryKey: ['offer-stats'],
   queryFn: async () => {
-    const res = await fetch(`${apiBase}/api/v1/offers/stats`, { credentials: 'include' })
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
-    return res.json() as Promise<Stats>
+    const { data, error } = await api.get<Stats>('/api/v1/offers/stats')
+    if (error) throw new Error(error.message)
+    return data!
   },
   refetchInterval: 30000
 })

@@ -4,10 +4,9 @@ import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const router = useRouter()
-const config = useRuntimeConfig()
-const apiBase = (config.public.apiBase as string).replace(/\/$/, '')
+const api = useApi()
 
-const id = route.params.id as string
+const id = computed(() => route.params.id as string)
 
 interface OfferDuplicate {
   id: string
@@ -117,9 +116,9 @@ async function load() {
   loading.value = true
   error.value = null
   try {
-    const res = await fetch(`${apiBase}/api/v1/offers/${id}`, { credentials: 'include' })
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
-    offer.value = await res.json() as Offer
+    const { data, error: err } = await api.get<Offer>(`/api/v1/offers/${id.value}`)
+    if (err) throw new Error(err.message)
+    offer.value = data as Offer
     for (const field of editableFields) {
       form[field] = (offer.value[field] as string | null) ?? ''
     }
@@ -139,13 +138,8 @@ async function save() {
     const payload: Record<string, unknown> = {}
     for (const field of editableFields) payload[field] = form[field] || null
     payload.internal_note = form.internal_note || null
-    const res = await fetch(`${apiBase}/api/v1/offers/${id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify(payload)
-    })
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    const { error: err } = await api.patch(`/api/v1/offers/${id.value}`, payload)
+    if (err) throw new Error(err.message)
     saveMsg.value = 'Modifications enregistrées.'
     await load()
   } catch (e) {
@@ -158,13 +152,8 @@ async function save() {
 async function transition(target: string) {
   error.value = null
   actionMsg.value = null
-  const res = await fetch(`${apiBase}/api/v1/offers/${id}/status`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
-    body: JSON.stringify({ status: target })
-  })
-  if (!res.ok) {
+  const { error: err } = await api.post(`/api/v1/offers/${id.value}/status`, { status: target })
+  if (err) {
     error.value = 'Transition impossible depuis le statut actuel.'
     return
   }
@@ -175,13 +164,8 @@ async function transition(target: string) {
 /** A near duplicate is never deleted: it is parked on "rejetee", a state the
  *  operator can undo, and the link back to the kept offer stays visible. */
 async function parkDuplicate(duplicateId: string) {
-  const res = await fetch(`${apiBase}/api/v1/offers/${duplicateId}/status`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
-    body: JSON.stringify({ status: 'rejetee' })
-  })
-  if (!res.ok) {
+  const { error: err } = await api.post(`/api/v1/offers/${duplicateId}/status`, { status: 'rejetee' })
+  if (err) {
     error.value = 'Impossible de signaler ce doublon.'
     return
   }
@@ -190,7 +174,7 @@ async function parkDuplicate(duplicateId: string) {
 }
 
 function generate() {
-  router.push(`/generate/${id}`)
+  router.push(`/generate/${id.value}`)
 }
 
 onMounted(load)

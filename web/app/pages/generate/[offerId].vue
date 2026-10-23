@@ -4,8 +4,7 @@ import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const offerId = route.params.offerId as string
-const config = useRuntimeConfig()
-const apiBase = (config.public.apiBase as string).replace(/\/$/, '')
+const api = useApi()
 
 const loading = ref(true)
 const error = ref<string | null>(null)
@@ -21,18 +20,16 @@ async function load() {
   loading.value = true
   error.value = null
   try {
-    const vRes = await fetch(`${apiBase}/api/v1/offers/${offerId}/copywriting`, { credentials: 'include' })
-    if (vRes.ok) {
-      const data = await vRes.json()
-      variants.value = data.items ?? []
+    const { data: vData } = await api.get<{ items?: { id: string; variant: number; text: string | null }[] }>(`/api/v1/offers/${offerId}/copywriting`)
+    if (vData?.items) {
+      variants.value = vData.items
       for (const variant of variants.value) {
         edited.value[variant.id] = variant.text ?? ''
       }
     }
-    const aRes = await fetch(`${apiBase}/api/v1/offers/${offerId}/assets`, { credentials: 'include' })
-    if (aRes.ok) {
-      const assets = await aRes.json()
-      const first = (assets ?? []).find((a: { image_path?: string | null }) => a.image_path)
+    const { data: aData } = await api.get<{ image_path?: string | null }[]>(`/api/v1/offers/${offerId}/assets`)
+    if (Array.isArray(aData)) {
+      const first = (aData).find((a) => a.image_path)
       if (first?.image_path) imageUrl.value = first.image_path
     }
   } catch (e) {
@@ -46,13 +43,8 @@ async function generateVariants() {
   generating.value = true
   error.value = null
   try {
-    const res = await fetch(`${apiBase}/api/v1/offers/${offerId}/copywriting`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({ count: 3 })
-    })
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    const { error: err } = await api.post(`/api/v1/offers/${offerId}/copywriting`, { count: 3 })
+    if (err) throw new Error(err.message)
     await load()
   } catch (e) {
     error.value = e instanceof Error ? e.message : 'Génération impossible.'
@@ -63,13 +55,8 @@ async function generateVariants() {
 
 async function saveVariant(variantId: string) {
   error.value = null
-  const res = await fetch(`${apiBase}/api/v1/offers/${offerId}/copywriting/${variantId}`, {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
-    body: JSON.stringify({ text: edited.value[variantId] })
-  })
-  if (!res.ok) {
+  const { error: err } = await api.patch(`/api/v1/offers/${offerId}/copywriting/${variantId}`, { text: edited.value[variantId] })
+  if (err) {
     error.value = 'Enregistrement impossible.'
     return
   }
@@ -91,13 +78,8 @@ async function markPublished() {
   publishMsg.value = null
   error.value = null
   try {
-    const res = await fetch(`${apiBase}/api/v1/offers/${offerId}/publish`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({ channel: 'export_manuel' })
-    })
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    const { error: err } = await api.post(`/api/v1/offers/${offerId}/publish`, { channel: 'export_manuel' })
+    if (err) throw new Error(err.message)
     publishMsg.value = 'Offre marquée comme publiée.'
   } catch (e) {
     error.value = e instanceof Error ? e.message : 'Publication impossible.'
@@ -189,7 +171,7 @@ onMounted(load)
                 <button
                   type="button"
                   class="rounded-lg bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 ring-1 ring-slate-200 transition-colors hover:bg-slate-50"
-                  @click="copy(edited[variant.id])"
+                  @click="copy(edited[variant.id] ?? null)"
                 >
                   Copier
                 </button>
