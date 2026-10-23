@@ -38,6 +38,7 @@ useHead({
         <BrandLogo />
 
         <nav
+          v-if="auth.isAuthenticated"
           class="hidden items-center gap-6 text-sm md:flex"
           aria-label="Navigation principale"
         >
@@ -56,6 +57,7 @@ useHead({
 
         <div class="ml-auto flex items-center gap-2">
           <UButton
+            v-if="auth.isAuthenticated"
             to="/offers/new"
             color="primary"
             size="sm"
@@ -81,6 +83,16 @@ useHead({
             size="sm"
             class="ring-2 ring-slate-200"
           />
+          <UButton
+            v-if="auth.isAuthenticated"
+            to="/logout"
+            color="neutral"
+            variant="ghost"
+            size="sm"
+            icon="i-lucide-log-out"
+          >
+            Déconnexion
+          </UButton>
         </div>
       </div>
     </header>
