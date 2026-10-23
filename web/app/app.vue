@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const route = useRoute()
+const mobileOpen = ref(false)
 const auth = useAuthStore()
 
 const navigation = [
@@ -17,7 +18,8 @@ const initials = computed(() => {
 })
 
 function isActive(to: string) {
-  return route.path === to
+  if (to === '/') return route.path === '/'
+  return route.path === to || route.path.startsWith(to + '/')
 }
 
 useHead({
@@ -54,6 +56,16 @@ useHead({
             {{ item.label }}
           </NuxtLink>
         </nav>
+
+        <button
+          class="ml-auto inline-flex items-center justify-center rounded-md p-2 text-slate-600 hover:bg-slate-100 md:hidden"
+          aria-label="Menu"
+          @click="mobileOpen = !mobileOpen"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12h18M3 6h18M3 18h18" />
+          </svg>
+        </button>
 
         <div class="ml-auto flex items-center gap-2">
           <UButton
@@ -94,6 +106,25 @@ useHead({
             Déconnexion
           </UButton>
         </div>
+      </div>
+
+      <!-- Mobile menu -->
+      <div
+        v-if="mobileOpen && auth.isAuthenticated"
+        class="border-t border-slate-200 bg-white md:hidden"
+      >
+        <nav class="flex flex-col gap-1 px-4 py-3">
+          <NuxtLink
+            v-for="item in navigation"
+            :key="item.to"
+            :to="item.to"
+            class="rounded px-3 py-2 text-sm font-semibold"
+            :class="isActive(item.to) ? 'bg-sky-50 text-sky-700' : 'text-slate-600 hover:bg-slate-50'"
+            @click="mobileOpen = false"
+          >
+            {{ item.label }}
+          </NuxtLink>
+        </nav>
       </div>
     </header>
 

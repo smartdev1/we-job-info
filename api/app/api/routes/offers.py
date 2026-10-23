@@ -163,7 +163,7 @@ async def list_offers(
     if source:
         stmt = stmt.where(Offer.source_id == source)
     if city:
-        stmt = stmt.where(Offer.city == city)
+        stmt = stmt.where(Offer.city.ilike(city))
     if contract:
         stmt = stmt.where(Offer.contract_type == contract)
     if sector:
